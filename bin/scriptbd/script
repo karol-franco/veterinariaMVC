@@ -1,0 +1,17 @@
+create database veterinariaABC;
+use veterinariaABC;
+
+create table persona(
+documento  varchar(20) primary key,
+nombre varchar (100),
+telefono varchar(10)
+);
+create table mascota(
+id int auto_increment primary key,
+nombre varchar(100),
+sexo varchar (50),
+raza varchar(100),
+documento_dueno varchar(10),
+foreign key (documento_dueno) references persona (documento)
+ );
+

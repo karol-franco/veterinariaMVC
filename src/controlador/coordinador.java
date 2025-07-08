@@ -53,6 +53,10 @@ public class coordinador {
 		
 		return miPersonaDao.listaPersonas();
 	}
+	public PersonaVo consultarPersonaPorDocumento(String documento) {
+		
+		return  miPersonaDao.ConsultarPersona(documento);
+	}
 	
 	
 	
@@ -69,11 +73,11 @@ public class coordinador {
 	public List<MascotaVo> ConsultarMascota(String documento) {
 		return miMascotaDao.ConsultarMascota(documento);
 	}
-	//public List<MascotaVo> listaMascotas() {
+	public List<MascotaVo> listaMascotas() {
 		
 		
-		//return miMascotaDao.listaMascotas();
-	//}
+		return miMascotaDao.listaMascotas();
+	}
 	public String obtenerNombreDueno(String documento) {
 	    return miPersonaDao.obtenerNombrePorDocumento(documento);
 	}

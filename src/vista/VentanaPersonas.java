@@ -112,6 +112,8 @@ public class VentanaPersonas extends JFrame  implements ActionListener{
 		btnConsultar = new JButton("Consultar");
 		btnConsultar.setBounds(277, 104, 86, 34);
 		contentPane.add(btnConsultar);
+		btnConsultar.addActionListener(this);
+		
 		tablaPersonas = new JTable();
 		scrollTabla = new JScrollPane(tablaPersonas);
 		scrollTabla.setBounds(71, 195, 388, 120);
@@ -154,6 +156,34 @@ public class VentanaPersonas extends JFrame  implements ActionListener{
 			    }
 
 			    tablaPersonas.setModel(modelo);
+			}
+			if (e.getSource()== btnConsultar) {
+				String documento = txtDoc.getText().trim();
+
+			    PersonaVo persona = miCoordinador.consultarPersonaPorDocumento(documento);
+
+			    if (persona == null) {
+			        DefaultTableModel modeloVacio = new DefaultTableModel();
+			        tablaPersonas.setModel(modeloVacio);
+			    } else {
+			        DefaultTableModel modelo = new DefaultTableModel();
+			        modelo.addColumn("Documento");
+			        modelo.addColumn("Nombre");
+			        modelo.addColumn("Teléfono");
+
+			        Object[] fila = {
+			            persona.getDocumento(),
+			            persona.getNombre(),
+			            persona.getTelefono()
+			        };
+			        modelo.addRow(fila);
+
+			        tablaPersonas.setModel(modelo);
+			    }
+
+			
+				
+				
 			}
 			
 		

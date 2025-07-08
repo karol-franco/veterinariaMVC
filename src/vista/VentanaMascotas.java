@@ -117,9 +117,10 @@ public class VentanaMascotas extends JFrame implements  ActionListener{
 		btnConsultarLista = new JButton("CONSULTAR LISTA");
 		btnConsultarLista.setBounds(20, 154, 474, 28);
 		contentPane.add(btnConsultarLista);
+		btnConsultarLista.addActionListener(this);
 		
 		lblNombreDueno = new JLabel("Dueño: ");
-		lblNombreDueno.setBounds(71, 193, 300, 20); // ajusta la posición si es necesario
+		lblNombreDueno.setBounds(71, 193, 300, 20);
 		contentPane.add(lblNombreDueno);
 		
 		areaTexto = new JTextArea();
@@ -128,7 +129,7 @@ public class VentanaMascotas extends JFrame implements  ActionListener{
 		scrollTexto.setBounds(71, 320, 388, 100);
 		contentPane.add(scrollTexto);
 
-		// AGREGAR ESTO
+
 		tablaMascotas = new JTable();
 		scrollTabla = new JScrollPane(tablaMascotas);
 		scrollTabla.setBounds(71, 209, 388, 100);
@@ -163,8 +164,6 @@ public class VentanaMascotas extends JFrame implements  ActionListener{
 		}
 		if (e.getSource() == btnConsultar) {
 			List<MascotaVo> ConsultarMascota = miCoordinador.ConsultarMascota(documento);
-			//StringBuilder sb = new StringBuilder();
-			//System.out.println("Presiono consultar");
 			    lblNombreDueno.setText("Dueño: " + nombreDueno);
 			if (ConsultarMascota.isEmpty()) {
 			    areaTexto.setText("No hay mascotas registradas para el documento: " + documento);
@@ -192,9 +191,23 @@ public class VentanaMascotas extends JFrame implements  ActionListener{
 			//areaTexto.setText(sb.toString());
 			
 			
+		}if (e.getSource()== btnConsultarLista) {
+			List<MascotaVo> lista = miCoordinador.listaMascotas();
+			StringBuilder sb = new StringBuilder();
+			 DefaultTableModel modelo = new DefaultTableModel();
+			    modelo.addColumn("Documento");
+			    modelo.addColumn("Nombre");
+			    modelo.addColumn("Teléfono");
+
+			    for (MascotaVo p : lista) {
+			        Object[] fila = { p.getNombre(), p.getRaza(), p.getSexo() };
+			        modelo.addRow(fila);
+			    }
+
+			    tablaMascotas.setModel(modelo);
+			}
+			
 		}
 		
-		
-		
-	}
+	
 }

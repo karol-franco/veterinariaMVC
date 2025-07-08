@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import conexion.ConexionBD;
 
 import modelo.vo.MascotaVo;
+import modelo.vo.PersonaVo;
 
 public class MascotaDao {
 
@@ -160,5 +161,25 @@ public class MascotaDao {
 		    }
 		    
 		    return ConsultarMascota;
+		}
+		public List<MascotaVo> listaMascotas() {
+			List<MascotaVo> lista = new ArrayList<>();
+		    try {
+		        String consulta = "SELECT * FROM mascota";
+		        PreparedStatement stmt = conexion.prepareStatement(consulta);
+		        ResultSet rs = stmt.executeQuery();
+
+		        while (rs.next()) {
+		            MascotaVo m = new MascotaVo();
+		            m.setNombre(rs.getString("Nombre"));
+		            m.setRaza(rs.getString("raza"));
+		            m.setSexo(rs.getString("sexo"));
+		            
+		            lista.add(m);
+		        }
+		    } catch (Exception e) {
+		        System.err.println("Error al listar mascotas: " + e.getMessage());
+		    }
+		    return lista;
 		}
 	}

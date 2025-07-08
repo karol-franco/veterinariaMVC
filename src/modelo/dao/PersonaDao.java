@@ -84,9 +84,9 @@ public class PersonaDao {
 		      ps.setString(1, personaVo.getDocumento());
 		      
 		    int fila = ps.executeUpdate();
+		    JOptionPane.showMessageDialog(null, "Persona Elimada con exito");
 		    ps.close();
 		    conectar.close();
-		    JOptionPane.showMessageDialog(null, "Persona Elimada con exito");
 		    return fila > 0;
 		
 		}catch(Exception e) {
@@ -130,6 +130,31 @@ public class PersonaDao {
 	        System.err.println("Error al obtener nombre del dueño: " + e.getMessage());
 	    }
 	    return nombre;
+	}
+	public PersonaVo ConsultarPersona(String documento) {
+		PersonaVo persona = null;
+	    try {
+	        Connection conn = ConexionBD.getInstancia().getConexion();
+	        String sql = "SELECT * FROM persona WHERE documento = ?";
+	        PreparedStatement ps = conn.prepareStatement(sql);
+	        ps.setString(1, documento);
+	        ResultSet rs = ps.executeQuery();
+
+	        if (rs.next()) {
+	            persona = new PersonaVo();
+	            persona.setDocuemento(rs.getString("documento"));
+	            persona.setNombre(rs.getString("nombre"));
+	            persona.setTelefono(rs.getString("Telefono"));
+	        }
+
+	        rs.close();
+	        ps.close();
+	    } catch (Exception e) {
+	        System.err.println("Error al consultar persona: " + e.getMessage());
+	    }
+
+	    return persona;
+	
 	}
 
 }
